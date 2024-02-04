@@ -1,11 +1,12 @@
-import { IDashboardComponent } from '@/app/components/dashboard/DashboardComponent'
-import { exec } from '@/app/utils/exec'
+import { IDashboardComponent } from '@/components/dashboard/DashboardComponent'
+import { exec } from '@/utils/exec'
 import {
-  getValueIntInString,
-  getValueFloatInString,
-} from '@/app/utils/getValueInString'
-import { kbToMb } from '@/app/utils/kbToMb'
-import { response } from '@/app/utils/response'
+  getCpuAppUsedInString,
+  getMemIntInString,
+  getMenFloatInString,
+} from '@/utils/getValueInString'
+import { kbToMb } from '@/utils/kbToMb'
+import { response } from '@/utils/response'
 import { NextRequest } from 'next/server'
 
 // Renomeie a função para `handler` e adicione `req` como argumento para capturar a requisição
@@ -18,26 +19,36 @@ export async function GET(req: NextRequest) {
     const { stdout: deviceMemInfo } = await exec(
       `adb -s ${device} shell dumpsys meminfo`
     )
-    const totalRam = getValueFloatInString(deviceMemInfo, 'Total RAM: ')
-    const freeRam = getValueFloatInString(deviceMemInfo, 'Free RAM: ')
-    const ramUsed = getValueFloatInString(deviceMemInfo, 'Used RAM: ')
+    const totalRam = getMenFloatInString(deviceMemInfo, 'Total RAM: ')
+    const freeRam = getMenFloatInString(deviceMemInfo, 'Free RAM: ')
+    const ramUsed = getMenFloatInString(deviceMemInfo, 'Used RAM: ')
 
-    // Application Informations
+    // Application Informations Memory RAM
     const { stdout: appMemInfo } = await exec(
       `adb -s ${device} shell dumpsys meminfo ${appId}`
     )
-    const memoryAppUsed = getValueIntInString(appMemInfo, 'MEMORY_USED:      ')
+    const memoryAppUsed = getMemIntInString(appMemInfo, 'MEMORY_USED:      ')
     const totalPSS = kbToMb(
-      Number(getValueIntInString(appMemInfo, 'TOTAL PSS:   '))
+      Number(getMemIntInString(appMemInfo, 'TOTAL PSS:   '))
     ).toFixed(2)
     const totalRSS = kbToMb(
-      Number(getValueIntInString(appMemInfo, 'TOTAL RSS:   '))
+      Number(getMemIntInString(appMemInfo, 'TOTAL RSS:   '))
     ).toFixed(2)
 
-    const memAppPercentConsume = Number(
+    const memAppPercentPSSUsed = Number(
       (Number(totalPSS) * 100) / Number(totalRam)
     ).toFixed(2)
+    const memAppPercentRSSUsed = Number(
+      (Number(totalRSS) * 100) / Number(totalRam)
+    ).toFixed(2)
 
+    // Application information CPU
+    // adb -s emulator-5554 shell dumpsys cpuinfo io.app.meusebrae
+    const { stdout: appCPUInfo } = await exec(
+      `adb -s ${device} shell dumpsys cpuinfo ${appId}`
+    )
+
+    const appCpuUsed = getCpuAppUsedInString(appCPUInfo, appId)
     return response<IDashboardComponent>({
       totalRam,
       freeRam,
@@ -45,7 +56,9 @@ export async function GET(req: NextRequest) {
       memoryAppUsed,
       totalPSS,
       totalRSS,
-      memAppPercentConsume,
+      memAppPercentPSSUsed,
+      memAppPercentRSSUsed,
+      appCpuUsed,
     })
   } catch (error) {
     return response({ error: 'Failed to fetch memory information' })

@@ -1,19 +1,19 @@
 import RootLayout from './layout'
-import { exec } from '@/app/utils/exec'
+import { exec } from '@/utils/exec'
 
-export default async function Home() {
+export default async function () {
   const { stdout: devices } = await exec(`adb devices`)
   const devicesList = String(devices)
     .split('\r\n')
     .filter((f) => f && f != 'List of devices attached')
   return (
     <RootLayout>
-      <form action='/dashboard' method='get'>
+      <form action='/dashboard' method='get' className='p-10'>
         <label
           htmlFor='devices'
-          className='block mb-2 text-sm font-medium text-gray-900 dark:text-white bg-slate-900 p-10'
+          className='block mb-2 text-sm font-medium text-gray-900 dark:text-white bg-slate-900 p-6'
         >
-          Selecione o dispositivo
+          Selecione um dispositivo
         </label>
         <select
           id='devices'
@@ -28,7 +28,7 @@ export default async function Home() {
         </select>
         <button
           type='submit'
-          className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
+          className='mt-1 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
         >
           Inspecionar
         </button>

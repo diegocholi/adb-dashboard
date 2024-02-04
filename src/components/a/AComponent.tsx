@@ -12,11 +12,13 @@ const AComponent = (props: PropsWithChildren<IAComponent>) => {
 
   const searchParams = useSearchParams()
   searchParams.forEach((item, key) => {
+    if (hrefBuilder.indexOf(`${key}=`) !== -1) return
     if (hrefBuilder.indexOf('?') === -1) {
       hrefBuilder += `?${key}=${item}`
-    } else hrefBuilder += `&${key}=${item}`
+      return
+    }
+    hrefBuilder += `&${key}=${item}`
   })
-  console.log(hrefBuilder)
   return <a href={hrefBuilder}>{props.children}</a>
 }
 

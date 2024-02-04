@@ -12,6 +12,7 @@ export default function RootLayout({
     <html lang='en'>
       <head>
         <script src='https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js'></script>
+        <script src='https://code.jquery.com/jquery-3.7.1.min.js'></script>
         <link
           rel='stylesheet'
           href='https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css'
