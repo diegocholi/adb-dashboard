@@ -1,6 +1,5 @@
-import CardContainer from './CardContainer'
-import CardHeader from './CardHeader'
-import CardBody from './CardBody'
-import CardFooter from './CardFooter'
+import Container from './Container'
+import Header from './Header'
+import Body from './Body'
 
-export default { CardContainer, CardHeader, CardBody, CardFooter }
+export default { Container, Header, Body }

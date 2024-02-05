@@ -28,18 +28,18 @@ export async function GET(req: NextRequest) {
       `adb -s ${device} shell dumpsys meminfo ${appId}`
     )
     const memoryAppUsed = getMemIntInString(appMemInfo, 'MEMORY_USED:      ')
-    const totalPSS = kbToMb(
+    const totalAppPSS = kbToMb(
       Number(getMemIntInString(appMemInfo, 'TOTAL PSS:   '))
     ).toFixed(2)
-    const totalRSS = kbToMb(
+    const totalAppRSS = kbToMb(
       Number(getMemIntInString(appMemInfo, 'TOTAL RSS:   '))
     ).toFixed(2)
 
     const memAppPercentPSSUsed = Number(
-      (Number(totalPSS) * 100) / Number(totalRam)
+      (Number(totalAppPSS) * 100) / Number(totalRam)
     ).toFixed(2)
     const memAppPercentRSSUsed = Number(
-      (Number(totalRSS) * 100) / Number(totalRam)
+      (Number(totalAppRSS) * 100) / Number(totalRam)
     ).toFixed(2)
 
     // Application information CPU
@@ -48,17 +48,17 @@ export async function GET(req: NextRequest) {
       `adb -s ${device} shell dumpsys cpuinfo ${appId}`
     )
 
-    const appCpuUsed = getCpuAppUsedInString(appCPUInfo, appId)
+    const cpuAppUsed = getCpuAppUsedInString(appCPUInfo, appId)
     return response<IDashboardComponent>({
       totalRam,
       freeRam,
       ramUsed,
       memoryAppUsed,
-      totalPSS,
-      totalRSS,
+      totalAppPSS,
+      totalAppRSS,
       memAppPercentPSSUsed,
       memAppPercentRSSUsed,
-      appCpuUsed,
+      cpuAppUsed,
     })
   } catch (error) {
     return response({ error: 'Failed to fetch memory information' })

@@ -1,7 +1,10 @@
-import AComponent from '@/components/a/AComponent'
 import DashboardComponent from '@/components/dashboard/DashboardComponent'
 import { exec } from '@/utils/exec'
 import { redirect } from 'next/navigation'
+import Table from '@/components/table'
+import TableRowAction from './components/TableAction'
+import SearchAction from './components/SearchAction'
+
 interface SearchParams {
   [key: string]: string // Define que cada chave é uma string e seu valor correspondente também é uma string.
 }
@@ -31,34 +34,21 @@ export default async (props: IDashboard) => {
     }
 
     return (
-      <div className='flex min-h-screen flex-col items-center justify-between p-24'>
-        <DashboardComponent>
-          {!appsIdList || (
-            <table className='table table-bordered table-hover'>
-              <thead>
-                <tr>
-                  <th>APP ID</th>
-                </tr>
-              </thead>
-              <tbody>
-                {appsIdList.map((value, key) => (
-                  <tr key={key}>
-                    <td>
-                      <AComponent
-                        href={`/dashboard?app-id=${value.replace(
-                          'package:',
-                          ''
-                        )}`}
-                      >
-                        {value.replace('package:', '')}
-                      </AComponent>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </DashboardComponent>
+      <div>
+        {/* Busca */}
+        <SearchAction />
+        <DashboardComponent />
+        {/* Tabela que lista os devices */}
+        <Table.TableContainer>
+          <Table.Thead>
+            <Table.Th>APP ID</Table.Th>
+          </Table.Thead>
+          <Table.Tbody>
+            {appsIdList.map((value, key) => (
+              <TableRowAction key={key} value={value.replace('package:', '')} />
+            ))}
+          </Table.Tbody>
+        </Table.TableContainer>
       </div>
     )
   } catch {

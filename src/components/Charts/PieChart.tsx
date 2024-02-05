@@ -33,22 +33,22 @@ export default function PieChart(props: IPieChart) {
         title: {
           display: false,
           text: 'Consumo de memória',
-          fontColor: 'black',
+          fontColor: 'white',
         },
         legend: {
           labels: {
-            fontColor: 'black',
+            fontColor: 'white',
           },
           align: 'end',
           position: 'bottom',
         },
         tooltips: {
           mode: 'index',
-          intersect: true,
+          intersect: false,
         },
         hover: {
           mode: 'nearest',
-          intersect: true,
+          intersect: false,
         },
         scales: {
           xAxes: [
@@ -56,11 +56,11 @@ export default function PieChart(props: IPieChart) {
               ticks: {
                 fontColor: 'rgba(255,255,255,.7)',
               },
-              display: true,
+              display: false,
               scaleLabel: {
                 display: false,
                 labelString: 'Month',
-                fontColor: 'black',
+                fontColor: 'white',
               },
               gridLines: {
                 display: false,
@@ -78,7 +78,7 @@ export default function PieChart(props: IPieChart) {
               ticks: {
                 fontColor: 'rgba(255,255,255,.7)',
               },
-              display: true,
+              display: false,
               scaleLabel: {
                 display: false,
                 labelString: 'Value',
