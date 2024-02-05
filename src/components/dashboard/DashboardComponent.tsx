@@ -83,8 +83,8 @@ const DashboardComponent = () => {
                 <PieChart
                   backgroundColor={['#00A45B', '#FF5B5B']}
                   borderColor={['#00A45B', '#FF5B5B']}
-                  labels={['Total', 'Usado']}
-                  data={[data.totalRam, data.ramUsed]}
+                  labels={['Livre', 'Usado']}
+                  data={[data.freeRam, data.ramUsed]}
                 />
               </div>
             </div>
