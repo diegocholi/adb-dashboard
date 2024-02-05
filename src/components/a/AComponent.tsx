@@ -4,10 +4,11 @@ import { PropsWithChildren } from 'react'
 
 interface IAComponent {
   href: string
+  className?: string
 }
 
 const AComponent = (props: PropsWithChildren<IAComponent>) => {
-  const { href } = props
+  const { href, className } = props
   let hrefBuilder: string = href
 
   const searchParams = useSearchParams()
@@ -19,7 +20,11 @@ const AComponent = (props: PropsWithChildren<IAComponent>) => {
     }
     hrefBuilder += `&${key}=${item}`
   })
-  return <a href={hrefBuilder}>{props.children}</a>
+  return (
+    <a className={className} href={hrefBuilder}>
+      {props.children}
+    </a>
+  )
 }
 
 export default AComponent
