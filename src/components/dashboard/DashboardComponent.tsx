@@ -20,7 +20,7 @@ export interface IDashboardComponent {
 const DashboardComponent = () => {
   const searchParams = useSearchParams()
   const appId = searchParams.get('app-id')
-  const device = searchParams.get('device')
+  const device = searchParams.get('device-inspect')
 
   const [data, setData] = useState<IDashboardComponent>({
     freeRam: 0,
