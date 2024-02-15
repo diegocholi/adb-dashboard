@@ -1,5 +1,9 @@
 ## Configuração de variáveis de ambiente (SDK Android 13 ou superior)
 
+### SDK Utilizado para o desenvolvimento
+    
+    [SDK 33](https://drive.google.com/file/d/1Wp7FecMz_qwrB6wPkoIqa3fJ7QM_J1S3/view?usp=sharing)
+
 ### Configuração android home
 
     ANDROID_HOME=C:\Users\{USER_SYSTEM}\AppData\Local\Android\Sdk
