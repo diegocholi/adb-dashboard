@@ -5,7 +5,7 @@
 
 ### Configuração android home
 
-    ANDROID_HOME=C:\Users\{USER_SYSTEM}\AppData\Local\Android\Sdk
+    ANDROID_HOME=C:\Users\{USER_SYSTEM}\AppData\Local\Android\android-sdk
 
 Configuração variável PATH 
     
